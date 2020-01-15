@@ -104,14 +104,14 @@ while gaming is True:
         room_items = room[guy.room].list
 
         if invintory == []:
-            print('\nYou have nothing')
+            print('\nYou have nothing\n')
         else:
             print('\nIn your invintory you have...')
             for i in invintory:
                 print(f'{i.name}: {i.desc}')
 
         if room_items == []:
-            print('\nThere is nothing here')
+            print('\nThere is nothing in the room\n')
         else:
             print('\nIn the room there is...')
             for i in room_items:
@@ -119,6 +119,7 @@ while gaming is True:
 
     # runs when the action is two words
     elif len(item_action) == 2:
+
         invintory_strings = []
         for i in guy.inv:
             invintory_strings.append(i.name)
@@ -127,19 +128,25 @@ while gaming is True:
         for i in room[guy.room].list:
             room_item_strings.append(i.name)
 
-        if item_action[0] == 'take':
-            if item_action[1] in room_item_strings:
-                guy.inv.append(item_action[1])
-                room[guy.room].list.drop(item_action[1])
-            else:
-                print("You can't take something that dosent exist")
+        item_dict = {'coin': coin,
+                     'rock': rock,
+                     'plant': plant}
 
         if item_action[0] == 'drop':
             if item_action[1] in invintory_strings:
-                room[guy.room].list.append(item_action[1])
-                guy.inv.drop(item_action[1])
+                room[guy.room].list.append(item_dict[item_action[1]])
+                guy.inv.remove(item_dict[item_action[1]])
+                print(f'You dropped {item_action[1]} at: {room[guy.room].name}\n')  # noqa
             else:
-                print("You don't have that to drop")
+                print("You don't have that to drop\n")
+
+        if item_action[0] == 'take':
+            if item_action[1] in room_item_strings:
+                guy.inv.append(item_dict[item_action[1]])
+                room[guy.room].list.remove(item_dict[item_action[1]])
+                print(f'You got {item_action[1]} from: {room[guy.room].name}\n')
+            else:
+                print("You can't take something that dosent exist\n")
 
     # quits the game
     elif action == 'q':

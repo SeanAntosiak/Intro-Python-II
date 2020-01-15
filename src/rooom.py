@@ -3,7 +3,7 @@
 
 
 class Room():
-    def __init__(self, name, desc, key, list=[], n_to=None,
+    def __init__(self, name, desc, key, list=None, n_to=None,
                  e_to=None, s_to=None, w_to=None
                  ):
         self.name = name
@@ -14,3 +14,5 @@ class Room():
         self.s_to = s_to
         self.e_to = e_to
         self.w_to = w_to
+        if self.list is None:
+            self.list = []
