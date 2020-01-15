@@ -108,26 +108,34 @@ while gaming is True:
         else:
             print('\nIn your invintory you have...')
             for i in invintory:
-                print(f'A {i.name}: {i.desc}')
+                print(f'{i.name}: {i.desc}')
 
         if room_items == []:
             print('\nThere is nothing here')
         else:
             print('\nIn the room there is...')
             for i in room_items:
-                print(f'A {i.name}: {i.desc}')
+                print(f'{i.name}: {i.desc}')
 
     # runs when the action is two words
     elif len(item_action) == 2:
+        invintory_strings = []
+        for i in guy.inv:
+            invintory_strings.append(i.name)
+
+        room_item_strings = []
+        for i in room[guy.room].list:
+            room_item_strings.append(i.name)
+
         if item_action[0] == 'take':
-            if item_action[1] in room[guy.room].list:
+            if item_action[1] in room_item_strings:
                 guy.inv.append(item_action[1])
                 room[guy.room].list.drop(item_action[1])
             else:
                 print("You can't take something that dosent exist")
 
         if item_action[0] == 'drop':
-            if item_action[1] in guy.inv:
+            if item_action[1] in invintory_strings:
                 room[guy.room].list.append(item_action[1])
                 guy.inv.drop(item_action[1])
             else:
